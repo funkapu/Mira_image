@@ -1,0 +1,64 @@
+# ── MindMirror voice agent — RunPod runtime deps ─────────────────────────
+# Target: Python 3.11, CUDA 12.1, A100 80GB.
+# vLLM pulls in a torch build matched to its release; do NOT also pin torch
+# here or pip will fight itself. Confirmed: vllm 0.11.x ships with torch
+# wheels compatible with cu121.
+
+# ── Inference server (Ultravox v0.6 Qwen3-32B) ─────────────────────────
+# 0.11+ is the first release with native Ultravox-Qwen3 audio-token support.
+# `[audio]` extra pulls librosa/soundfile/av needed for audio_tower.
+vllm[audio]==0.11.0
+
+# ── LiveKit agent stack ─────────────────────────────────────────────────
+# `livekit` (1.x) is the SDK that exposes `livekit.rtc`; the old
+# `livekit-rtc` PyPI name was retired and never had wheels for Py 3.11+.
+# livekit-agents 1.5.x pulls livekit==1.1.5 transitively, but pin it here
+# so that resolution failures show up as a clear build error.
+livekit-agents>=1.5.0,<2
+livekit>=1.1,<2
+livekit-plugins-silero>=1.5.0,<2
+livekit-plugins-cartesia>=1.5.0,<2
+# MiniMax plugin was renamed `livekit-plugins-minimax` → `livekit-plugins-minimax-ai`
+# in the 1.5.x rollup. Old name still resolves but maps to a different repo.
+livekit-plugins-minimax-ai>=1.5.0,<2
+
+# ── Model loading ───────────────────────────────────────────────────────
+# qwen3-lora-whisper-8000/ on HF is a fully-merged Ultravox checkpoint
+# (config.json + sharded safetensors), so no LoRA adapter machinery is
+# needed — vLLM loads the directory directly. Don't add `peft` here.
+transformers>=4.51.0
+huggingface-hub>=0.34,<1.0
+hf_transfer
+
+# ── STT (faster-whisper, CT2 backend) ──────────────────────────────────
+faster-whisper>=1.0.3
+ctranslate2>=4.4.0
+
+# ── Audio I/O ──────────────────────────────────────────────────────────
+soundfile>=0.12.0
+librosa>=0.10.0
+av>=11.0.0
+
+# ── Numerics ───────────────────────────────────────────────────────────
+numpy>=1.24.0,<2.0
+scipy>=1.11.0
+
+# ── LangGraph / supervisors used by mira_graph ─────────────────────────
+langgraph>=0.2.50
+langchain-core>=0.3.0
+cerebras-cloud-sdk>=1.20.0
+groq>=1.0.0
+openai>=1.50.0
+
+# ── HTTP / utility ─────────────────────────────────────────────────────
+httpx>=0.27.0
+requests>=2.31.0
+fastapi>=0.110.0
+python-dotenv>=1.0.0
+pydantic>=2.0.0
+
+# ── RAG dependencies (added 2026-05-13) ───────────────────────────────
+# Used by /app/rag/retriever.py for FAISS vector search and
+# /app/rag/compose.py for multilingual embeddings (Thai→English retrieval).
+sentence-transformers>=2.5.0
+faiss-cpu>=1.7.0

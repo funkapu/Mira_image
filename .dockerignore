@@ -1,0 +1,66 @@
+# ── Build hygiene — never ship in image ─────────────────────────────
+# Keep the image small and avoid leaking dev/secrets files.
+
+# Version control
+.git/
+.gitignore
+.gitattributes
+
+# IDE / dev assistants
+.claude/
+.vscode/
+.idea/
+.cursor/
+
+# Python build artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Backups created during incident response / refactoring
+*.bak
+*.bak_*
+*.bak2
+*.orig
+
+# Logs (runtime artifacts)
+*.log
+logs/
+
+# Tmp / staging
+tmp/
+/tmp/
+.tmp/
+*.tmp
+
+# Secrets — these MUST be env vars at runtime, never baked in
+.env
+.env.*
+*.pem
+*.key
+secrets/
+
+# Models (71 GB) — downloaded at runtime by setup_runpod.sh onto
+# the persistent /workspace volume, never into the image.
+models/
+*.safetensors
+*.bin
+*.gguf
+*.tar.gz
+*.zip
+
+# Node (if any future tooling)
+node_modules/
+
+# Generic backup folders
+backup/
+backups/
+
+# OS junk
+.DS_Store
+Thumbs.db

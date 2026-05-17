@@ -1,0 +1,73 @@
+{
+  "crisis_responses": [
+    {
+      "trigger_severity": "critical",
+      "match_keywords": ["อยากตาย", "ฆ่าตัวตาย"],
+      "response": "[EMOTION: concerned] นี่เป็นความรู้สึกที่หนักมากเลย ขอบคุณที่บอก Mira นะ คุณกำลังคิดทำร้ายตัวเองอยู่ตอนนี้ไหม? Mira อยากให้คุณโทร 1323 สายด่วนสุขภาพจิตฟรี 24 ชั่วโมง มีคนพร้อมรับฟัง"
+    },
+    {
+      "trigger_severity": "critical",
+      "match_keywords": ["ไม่อยากตื่น", "ไม่อยากตื่นมา", "ไม่อยากตื่นมาแล้ว"],
+      "response": "[EMOTION: concerned] เข้าใจว่ามันเหนื่อยมาก จนรู้สึกไม่อยากเจอวันใหม่ — Mira ห่วงคุณ นี่เป็นความรู้สึกอยากหายไปจากความเจ็บปวด หรือคุณคิดทำร้ายตัวเองด้วยไหม? โทร 1323 ฟรี 24 ชม. ได้นะ"
+    },
+    {
+      "trigger_severity": "critical",
+      "match_keywords": ["ทำร้ายตัวเอง", "กรีดข้อมือ", "แขวนคอ"],
+      "response": "[EMOTION: concerned] Mira ห่วงคุณมาก ตอนนี้คุณปลอดภัยไหม? ถ้าคุณกำลังคิดทำร้ายตัวเอง โทร 1323 (สุขภาพจิตฟรี 24 ชม.) หรือ 1669 ฉุกเฉินได้เลย Mira จะอยู่ฟังต่อ"
+    },
+    {
+      "trigger_severity": "critical",
+      "match_keywords": ["จบชีวิต", "กระโดด"],
+      "response": "[EMOTION: concerned] นี่หนักมากเลย ขอบคุณที่บอก Mira คุณปลอดภัยตอนนี้ไหม? ชีวิตคุณสำคัญมาก โทร 1323 (สุขภาพจิตฟรี 24 ชม.) มีคนพร้อมช่วย"
+    },
+    {
+      "trigger_severity": "high",
+      "match_keywords": ["หมดหวัง", "ไม่ไหวแล้ว"],
+      "response": "[EMOTION: concerned] นี่หนักมากเลย ขอบคุณที่บอก Mira ตอนนี้คุณปลอดภัยไหม? ลองโทร 1323 (สุขภาพจิตฟรี 24 ชม.) Mira จะอยู่ฟังต่อ"
+    },
+    {
+      "trigger_severity": "high",
+      "match_keywords": ["หายไป", "หายตัวไป"],
+      "response": "[EMOTION: concerned] เข้าใจว่าคุณรู้สึกอยากหนีจากความเจ็บปวด — นี่หนักมาก คุณคิดทำร้ายตัวเองไหม? โทร 1323 ฟรี 24 ชม. ได้นะ Mira อยู่ด้วย"
+    },
+    {
+      "trigger_severity": "high",
+      "match_keywords": ["ไม่มีใครรัก", "ไม่มีใครต้องการ"],
+      "response": "[EMOTION: concerned] รู้สึกโดดเดี่ยวและไม่มีใครเข้าใจ — นี่เจ็บปวดมาก คุณคิดทำร้ายตัวเองไหม? ถ้าใช่ โทร 1323 ฟรี 24 ชม. Mira ห่วงคุณ"
+    },
+    {
+      "trigger_severity": "high",
+      "match_keywords": ["ทุกอย่างไร้ค่า", "ไม่มีความหมาย"],
+      "response": "[EMOTION: concerned] รู้สึกว่าทุกอย่างไร้ความหมาย — นี่หนักมาก คุณคิดทำร้ายตัวเองไหม? ถ้าใช่ โทร 1323 (สุขภาพจิตฟรี 24 ชม.) Mira อยู่ฟังต่อ"
+    },
+    {
+      "trigger_severity": "moderate",
+      "match_keywords": ["ไม่มีใครเข้าใจ"],
+      "response": "[EMOTION: empathetic] รู้สึกว่าไม่มีใครเข้าใจ — นี่โดดเดี่ยวมาก Mira อยากฟังว่าเกิดอะไรขึ้น คุณคิดทำร้ายตัวเองไหม?"
+    },
+    {
+      "trigger_severity": "moderate",
+      "match_keywords": ["ไม่อยากเจอวันพรุ่งนี้"],
+      "response": "[EMOTION: concerned] รู้สึกไม่อยากเจอวันใหม่ — นี่เหนื่อยมาก คุณคิดทำร้ายตัวเองไหม? ถ้าใช่ โทร 1323 ฟรี 24 ชม. Mira อยู่ฟังต่อ"
+    }
+  ],
+  "default_crisis_response": {
+    "trigger_severity": "any",
+    "response": "[EMOTION: concerned] Mira ห่วงคุณ คุณกำลังคิดทำร้ายตัวเองไหม? ถ้าใช่ โทร 1323 (สุขภาพจิตฟรี 24 ชม.) หรือ 1669 ฉุกเฉิน Mira อยู่ฟังต่อ"
+  },
+  "notes": {
+    "hotlines": {
+      "1323": "สายด่วนสุขภาพจิต กรมสุขภาพจิต (ฟรี 24 ชม.)",
+      "1669": "สายด่วนฉุกเฉิน (ฟรี 24 ชม.)"
+    },
+    "guidelines": [
+      "Always include 1323 hotline for crisis",
+      "Validate feelings first",
+      "Ask about immediate safety",
+      "Use [EMOTION: concerned] for all crisis responses",
+      "Keep response 1-2 sentences",
+      "Avoid 'พี่เข้าใจ' opener",
+      "Avoid 'ฟังดูเหมือน...ใช่ไหมคะ' pattern"
+    ]
+  }
+}

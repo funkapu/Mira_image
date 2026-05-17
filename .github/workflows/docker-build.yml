@@ -1,0 +1,81 @@
+name: Build & push Docker image to GHCR
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - 'RECOVERY.md'
+      - '**/*.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  REGISTRY: ghcr.io
+  # owner/repo lowercased — GHCR requires lowercase image names
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      # GH Actions ubuntu-latest has only ~14GB free disk. The CUDA base
+      # + vllm + torch can blow past that. Free another ~30GB before build.
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: false
+          docker-images: false
+          swap-storage: true
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lowercase image name
+        id: imgname
+        run: echo "name=$(echo ${IMAGE_NAME} | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+
+      - name: Compute date tag
+        id: date
+        run: echo "stamp=$(date -u +%Y%m%d)" >> "$GITHUB_OUTPUT"
+
+      - name: Build & push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ steps.imgname.outputs.name }}:latest
+            ${{ env.REGISTRY }}/${{ steps.imgname.outputs.name }}:sha-${{ github.sha }}
+            ${{ env.REGISTRY }}/${{ steps.imgname.outputs.name }}:nsc-demo-${{ steps.date.outputs.stamp }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: false
+
+      - name: Image summary
+        run: |
+          echo "## Pushed image" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          echo "${{ env.REGISTRY }}/${{ steps.imgname.outputs.name }}:latest" >> "$GITHUB_STEP_SUMMARY"
+          echo "${{ env.REGISTRY }}/${{ steps.imgname.outputs.name }}:sha-${{ github.sha }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "${{ env.REGISTRY }}/${{ steps.imgname.outputs.name }}:nsc-demo-${{ steps.date.outputs.stamp }}" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"

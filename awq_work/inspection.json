@@ -1,0 +1,34 @@
+{
+  "model_path": "/workspace/models/ultravox/merged-full-v2",
+  "output_path": "/workspace/models/ultravox/merged-full-v2-awq",
+  "architectures": [
+    "UltravoxModel"
+  ],
+  "model_type": "ultravox",
+  "text_config_model_type": "qwen3",
+  "audio_config_model_type": "whisper",
+  "top_level_modules": [
+    "audio_tower",
+    "language_model",
+    "multi_modal_projector"
+  ],
+  "n_decoder_layers": 64,
+  "n_quantizable_linear_modules": 448,
+  "sample_quantizable_modules": [
+    "language_model.model.layers.0.mlp.down_proj",
+    "language_model.model.layers.0.mlp.gate_proj",
+    "language_model.model.layers.0.mlp.up_proj",
+    "language_model.model.layers.0.self_attn.k_proj",
+    "language_model.model.layers.0.self_attn.o_proj",
+    "language_model.model.layers.0.self_attn.q_proj",
+    "language_model.model.layers.0.self_attn.v_proj"
+  ],
+  "ignore_patterns_for_llmcompressor": [
+    "re:.*audio_tower.*",
+    "re:.*multi_modal_projector.*",
+    "lm_head"
+  ],
+  "audio_tower_tensor_count": 487,
+  "language_model_tensor_count": 707,
+  "multi_modal_projector_tensor_count": 4
+}

@@ -1,0 +1,9 @@
+livekit-agents>=0.12.0
+livekit-plugins-cartesia>=0.4.0
+livekit-plugins-silero>=0.7.0
+transformers>=4.46.0
+torch>=2.4.0
+openai>=1.50.0
+soundfile>=0.12.0
+numpy>=1.24.0
+scipy>=1.11.0

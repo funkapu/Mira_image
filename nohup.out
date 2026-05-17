@@ -1,0 +1,27 @@
+[Sat May 16 10:56:06 UTC 2026] === Starting AWQ overnight pipeline ===
+[Sat May 16 10:56:12 UTC 2026] Phase 1: Inspect
+[OK] Model dir found: /workspace/models/ultravox/merged-full-v2
+[i] /workspace free: 183.1 GB (need >= 30 GB)
+[OK] CUDA: NVIDIA A100-SXM4-80GB, 85 GB total
+[i] Loading model config...
+    Architecture: ['UltravoxModel']
+    Model type: ultravox
+[i] Loading model on meta device (no memory used)...
+Encountered exception while importing accelerate: No module named 'accelerate'
+Encountered exception while importing peft: No module named 'peft'
+Traceback (most recent call last):
+  File "/workspace/awq_work/01_inspect.py", line 37, in <module>
+    model_cls = type(AutoModel.from_config(config, trust_remote_code=True))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/transformers/models/auto/auto_factory.py", line 444, in from_config
+    model_class = get_class_from_dynamic_module(class_ref, repo_id, **kwargs)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/transformers/dynamic_module_utils.py", line 604, in get_class_from_dynamic_module
+    final_module = get_cached_module_file(
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/transformers/dynamic_module_utils.py", line 427, in get_cached_module_file
+    modules_needed = check_imports(resolved_module_file)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/transformers/dynamic_module_utils.py", line 260, in check_imports
+    raise ImportError(
+ImportError: This modeling file requires the following packages that were not found in your environment: accelerate, peft. Run `pip install accelerate peft`
